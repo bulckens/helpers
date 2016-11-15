@@ -1,0 +1,22 @@
+{
+    "name": "bulckens/helpers",
+    "description": "A collection of core helpers useful for any PHP app",
+    "type": "library",
+    "license": "Proprietary",
+    "authors": [
+        {
+            "name": "wout",
+            "email": "wout@mick-wout.com"
+        }
+    ],
+    "require": {},
+    "dist": {
+        "url": "git@github.com:bulckens/helpers.git",
+        "type": "git"
+    },
+    "autoload": {
+        "psr-0": {
+            "Bulckens": "src/"
+        }
+    }
+}
