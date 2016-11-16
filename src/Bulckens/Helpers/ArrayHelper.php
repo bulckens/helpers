@@ -3,6 +3,7 @@
 namespace Bulckens\Helpers;
 
 use SimpleXMLElement;
+use Symfony\Component\Yaml\Yaml;
 
 class ArrayHelper {
 
@@ -63,6 +64,14 @@ class ArrayHelper {
     $options = array_replace( [ 'root' => 'root' ], $options );
 
     return json_encode( [ $options['root'] => $array ]);
+  }
+
+  // Convert array to YAML
+  public static function toYaml( $array, $options = [] ) {
+    // merge defaults
+    $options = array_replace( [ 'root' => 'root' ], $options );
+
+    return Yaml::dump( [ $options['root'] => $array ]);
   }
   
   // Convert array to XML

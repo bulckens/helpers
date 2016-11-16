@@ -9,7 +9,9 @@
             "email": "wout@mick-wout.com"
         }
     ],
-    "require": {},
+    "require": {
+        "symfony/yaml": "^3.1"
+    },
     "dist": {
         "url": "git@github.com:bulckens/helpers.git",
         "type": "git"
