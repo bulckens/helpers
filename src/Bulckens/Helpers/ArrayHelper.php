@@ -20,7 +20,7 @@ class ArrayHelper {
       return $a1 == $a2;
     });
   }
-
+  
   // Test for associative array
   public static function isAssociative( $array ) {
     return array_keys( $array ) !== range( 0, count( $array ) - 1 );
@@ -38,7 +38,7 @@ class ArrayHelper {
     if ( ! is_array( $collection ) )
       $collection = $collection->toArray();
 
-    // fetch all individual ids
+    // fetch all individual keys
     return array_map( function( $item ) use( $key ) {
       return $item[$key];
     }, $collection );
@@ -59,19 +59,13 @@ class ArrayHelper {
   }
 
   // Convert array to JSON
-  public static function toJson( $array, $options = [] ) {
-    // merge defaults
-    $options = array_replace( [ 'root' => 'root' ], $options );
-
-    return json_encode( [ $options['root'] => $array ]);
+  public static function toJson( $array ) {
+    return json_encode( $array );
   }
 
   // Convert array to YAML
-  public static function toYaml( $array, $options = [] ) {
-    // merge defaults
-    $options = array_replace( [ 'root' => 'root' ], $options );
-
-    return Yaml::dump( [ $options['root'] => $array ]);
+  public static function toYaml( $array ) {
+    return Yaml::dump( $array );
   }
   
   // Convert array to XML
