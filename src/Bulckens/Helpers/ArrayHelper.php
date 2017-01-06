@@ -71,16 +71,20 @@ class ArrayHelper {
   // Convert array to XML
   public static function toXml( $array, $options = [] ) {
     // merge defaults
-    $options = array_replace( [ 'xml' => null, 'name' => 'numeric_', 'root' => 'root' ], $options );
+    $options = array_replace( [ 'xml' => null, 'name' => 'item', 'root' => 'root' ], $options );
 
     // ensure xml object
     if ( is_null( $options['xml'] ) )
       $options['xml'] = new SimpleXMLElement( "<{$options['root']}/>" );
-
+    
     // dig through array structure
     foreach ( $array as $key => $value ) {
       // dealing with <0/>..<n/> issues
-      if ( is_numeric( $key ) ) $key = "{$options['name']}$key";
+      if ( is_numeric( $key ) ) $key = $options['name'];
+
+      // make sure objects are converted to an array where possible
+      if ( is_object( $value ) && method_exists( $value, 'toArray' ) )
+        $value = $value->toArray();
       
       // test if a recruisive call is required
       is_array( $value )
