@@ -65,7 +65,7 @@ class ArrayHelper {
 
   // Convert array to YAML
   public static function toYaml( $array ) {
-    return Yaml::dump( $array );
+    return Yaml::dump( $array, 2, 2 );
   }
   
   // Convert array to XML
