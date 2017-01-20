@@ -73,7 +73,7 @@ class ArrayHelper {
     return Yaml::dump( $array, 2, 2 );
   }
 
-  public function fromYaml( $yaml ) {
+  public static function fromYaml( $yaml ) {
     return Yaml::parse( $yaml );
   }
   
