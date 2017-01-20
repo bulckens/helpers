@@ -63,9 +63,18 @@ class ArrayHelper {
     return json_encode( $array );
   }
 
+  // Convert JSON to array
+  public static function fromJson( $json ) {
+    return json_decode( $json, true );
+  }
+
   // Convert array to YAML
   public static function toYaml( $array ) {
     return Yaml::dump( $array, 2, 2 );
+  }
+
+  public function fromYaml( $yaml ) {
+    return Yaml::parse( $yaml );
   }
   
   // Convert array to XML
@@ -94,5 +103,11 @@ class ArrayHelper {
 
     return $options['xml']->asXML();
   }
-  
+
+  // Convert array to XML
+  public static function fromXml( $xml ) {
+    $xml = simplexml_load_string( $xml, 'SimpleXMLElement', LIBXML_NOCDATA );
+    return json_decode( json_encode( $xml ), true );
+  }
+
 }

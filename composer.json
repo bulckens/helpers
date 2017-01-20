@@ -20,5 +20,8 @@
         "psr-0": {
             "Bulckens": "src/"
         }
+    },
+    "require-dev": {
+        "phpspec/phpspec": "^3.2"
     }
 }
