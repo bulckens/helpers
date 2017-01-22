@@ -3,6 +3,7 @@
 namespace Bulckens\Helpers;
 
 use SimpleXMLElement;
+use Illuminate\Support\Str;
 use Symfony\Component\Yaml\Yaml;
 
 class ArrayHelper {
@@ -80,7 +81,11 @@ class ArrayHelper {
   // Convert array to XML
   public static function toXml( $array, $options = [] ) {
     // merge defaults
-    $options = array_replace( [ 'xml' => null, 'name' => 'item', 'root' => 'root' ], $options );
+    $options = array_replace([
+      'xml'    => null
+    , 'root'   => 'root'
+    , 'parent' => null
+    ], $options );
 
     // ensure xml object
     if ( is_null( $options['xml'] ) )
@@ -89,7 +94,7 @@ class ArrayHelper {
     // dig through array structure
     foreach ( $array as $key => $value ) {
       // dealing with <0/>..<n/> issues
-      if ( is_numeric( $key ) ) $key = $options['name'];
+      if ( is_numeric( $key ) ) $key = Str::singular( $options['parent'] ?: 'item' );
 
       // make sure objects are converted to an array where possible
       if ( is_object( $value ) && method_exists( $value, 'toArray' ) )
@@ -97,7 +102,7 @@ class ArrayHelper {
       
       // test if a recruisive call is required
       is_array( $value )
-        ? self::toXml( $value, [ 'xml' => $options['xml']->addChild( $key ) ] )
+        ? self::toXml( $value, [ 'xml' => $options['xml']->addChild( $key ), 'parent' => $key ] )
         : $options['xml']->addChild( $key, $value );
     }
 
@@ -106,8 +111,31 @@ class ArrayHelper {
 
   // Convert array to XML
   public static function fromXml( $xml ) {
+    // parse xml to array
     $xml = simplexml_load_string( $xml, 'SimpleXMLElement', LIBXML_NOCDATA );
-    return json_decode( json_encode( $xml ), true );
+    $raw = json_decode( json_encode( $xml ), true );    
+
+    return self::flattenFromXml( $raw );
+  }
+
+  // Remove nested arrays introduced by semantic xml markup
+  protected static function flattenFromXml( $array ) {
+    foreach ( $array as $k => $value ) {
+      if ( is_array( $value ) ) {
+        // get singular name of node
+        $s = Str::singular( $k );
+
+        // if the singular child node is present, is the only child and is an array
+        if ( isset( $array[$k][$s] ) && is_array( $array[$k][$s] ) && count( $array[$k] ) == 1 )
+          // remove the wrapping child
+          $array[$k] = $array[$k][$s];
+
+        // perform a deep traverse
+        $array[$k] = self::flattenFromXml( $array[$k] );
+      } 
+    }
+
+    return $array;
   }
 
 }

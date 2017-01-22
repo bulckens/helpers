@@ -10,7 +10,8 @@
         }
     ],
     "require": {
-        "symfony/yaml": "^3.1"
+        "symfony/yaml": "^3.1",
+        "illuminate/support": "^5.3"
     },
     "dist": {
         "url": "git@github.com:bulckens/helpers.git",
