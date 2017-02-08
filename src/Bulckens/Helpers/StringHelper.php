@@ -14,6 +14,7 @@ class StringHelper {
     return $hex;
   }
 
+
   // Convert hex to string
   public static function fromHex( $hex ){
     $string = '';
@@ -23,6 +24,7 @@ class StringHelper {
     
     return $string;
   }
+
 
   // Test for blank value
   public static function isBlank( $value ) {

@@ -15,6 +15,7 @@ class ArrayHelper {
     });
   }
 
+
   // Intersect two object arrays
   public static function overlap( $first, $second ) {
     return array_uintersect( $first, $second, function ( $a1, $a2 ) {
@@ -22,16 +23,19 @@ class ArrayHelper {
     });
   }
   
+
   // Test for associative array
   public static function isAssociative( $array ) {
     return array_keys( $array ) !== range( 0, count( $array ) - 1 );
   }
+
 
   // Get value from associative array with null fallback
   public static function valueFrom( $array, $key ) {
     if ( isset( $array[$key] ) )
       return $array[$key];
   }
+
 
   // Get values for key from an Eloquent collection
   public static function valuesFromCollection( $key, $collection ) {
@@ -44,6 +48,7 @@ class ArrayHelper {
       return $item[$key];
     }, $collection );
   }
+
 
   // Convert a deep associatibe array to a delimited key array
   public static function flattenDelimited( $array, $prefix = '', $delimiter = '.' ) {
@@ -59,25 +64,30 @@ class ArrayHelper {
     return $result;
   }
 
+
   // Convert array to JSON
   public static function toJson( $array ) {
     return json_encode( $array );
   }
+
 
   // Convert JSON to array
   public static function fromJson( $json ) {
     return json_decode( $json, true );
   }
 
+
   // Convert array to YAML
   public static function toYaml( $array ) {
     return Yaml::dump( $array, 2, 2 );
   }
 
+
   public static function fromYaml( $yaml ) {
     return Yaml::parse( $yaml );
   }
   
+
   // Convert array to XML
   public static function toXml( $array, $options = [] ) {
     // merge defaults
@@ -109,6 +119,7 @@ class ArrayHelper {
     return $options['xml']->asXML();
   }
 
+
   // Convert array to XML
   public static function fromXml( $xml ) {
     // parse xml to array
@@ -117,6 +128,7 @@ class ArrayHelper {
 
     return self::flattenFromXml( $raw );
   }
+
 
   // Remove nested arrays introduced by semantic xml markup
   protected static function flattenFromXml( $array ) {
