@@ -2,11 +2,11 @@
 
 namespace spec\Bulckens\Helpers;
 
+use stdClass;
 use Bulckens\Helpers\ArrayHelper;
 use PhpSpec\ObjectBehavior;
 use Prophecy\Argument;
 use ArrayIterator;
-use stdClass;
 
 class ArrayHelperSpec extends ObjectBehavior {
   
@@ -89,9 +89,106 @@ class ArrayHelperSpec extends ObjectBehavior {
     $this::toYaml([ 'jarjar' => 'binks' ])->shouldBe( "jarjar: binks\n" );
   }
 
+
   // FromYaml method
   function it_converts_yaml_to_an_array() {
     $this::fromYaml( "jarjar: binks" )->shouldBe( [ 'jarjar' => 'binks' ] );
   }
 
+
+  // Censor method
+  function it_strips_password_values_from_given_accociative_array() {
+    $this::censor([ 'password' => 'abc123' ])->shouldHaveKeyWithValue( 'password', 'PASSWORD HIDDEN' );
+  }
+
+  function it_strips_password_values_from_given_accociative_array_with_nested_arrays() {
+    $array = $this::censor([ 'password' => 'abc123', 'other' => [ 'password_confirmation' => 'abc123' ] ]);
+
+    $array->shouldHaveKeyWithValue( 'password', 'PASSWORD HIDDEN' );
+    $array['other']->shouldHaveKeyWithValue( 'password_confirmation', 'PASSWORD HIDDEN' );
+  }
+
+  function it_strips_php_auth_pw_values_from_given_accociative_array() {
+    $this::censor([ 'PHP_AUTH_PW' => '121212' ])->shouldHaveKeyWithValue( 'PHP_AUTH_PW', 'PASSWORD HIDDEN' );
+  }
+
+
+  // ToString method
+  function it_converts_an_array_to_string() {
+    $string = $this::toString([ 'falder' => 'aldera' ]);
+    $string->shouldContain( '[falder] => aldera' );
+    $string->shouldContain( ')' );
+  }
+
+  function it_does_not_censor_sensitive_data() {
+    $string = $this::toString([ 'sensitive' => [ 'password' => 'hihihi' ] ]);
+    $string->shouldContain( '[password] => hihihi' );
+  }
+
+  function it_does_censor_sensitive_data_if_specifically_required() {
+    $string = $this::toString([ 'sensitive' => [ 'password' => 'hihihi' ] ], [ 'censor' => true ]);
+    $string->shouldContain( '[password] => PASSWORD HIDDEN' );
+    $string->shouldNotContain( 'hihihi' );
+  }
+
+  function it_does_not_censor_sensitive_data_if_specifically_not_required() {
+    $string = $this::toString([ 'sensitive' => [ 'password' => 'hihihi' ] ], [ 'censor' => false ]);
+    $string->shouldContain( '[password] => hihihi' );
+  }
+
+  function it_does_not_strip_whitespace() {
+    $string = $this::toString([ 'funny' => 'story' ]);
+    $string->shouldContain( "\n" );
+    $string->shouldContain( '    ' );
+  }
+
+  function it_strips_whitespace_if_specifically_required() {
+    $string = $this::toString([ 'funny' => 'story' ], [ 'strip' => true ]);
+    $string->shouldNotContain( "\n" );
+    $string->shouldNotContain( '    ' );
+  }
+
+  function it_does_not_strip_whitespace_if_specifically_not_required() {
+    $string = $this::toString([ 'funny' => 'story' ], [ 'strip' => false ]);
+    $string->shouldContain( "\n" );
+    $string->shouldContain( '    ' );
+  }
+
+  function it_does_not_print_pretty() {
+    $string = $this::toString([ 'funny' => new stdClass() ], [ 'strip' => true ]);
+    $string->shouldContain( '[funny] => stdClass Object ( )' );
+  }
+
+  function it_does_print_pretty_if_specifically_required() {
+    $string = $this::toString([ 'funny' => new stdClass() ], [ 'strip' => true, 'pretty' => true ]);
+    $string->shouldContain( '[funny] => stdClass' );
+  }
+
+  function it_does_print_pretty_with_nested_arrays_if_specifically_required() {
+    $string = $this::toString([ 'funny' => [ 'fact' => new stdClass(), 'in' => [ 'side' => new stdClass() ] ] ], [ 'strip' => true, 'pretty' => true ]);
+    $string->shouldContain( '[funny] => ( [fact] => stdClass ' );
+    $string->shouldNotContain( 'stdClass Object ( )' );
+  }
+
+  function it_does_not_print_pretty_if_specifically_not_required() {
+    $string = $this::toString([ 'funny' => new stdClass() ], [ 'strip' => true, 'pretty' => false ]);
+    $string->shouldContain( '[funny] => stdClass' );
+  }
+
+  function it_does_strip_array_prefixes() {
+    $string = $this::toString([ 'not_so_funny' => 'story' ]);
+    $string->shouldNotStartWith( 'Array' );
+    $string->shouldNotContain( 'Array' );
+  }
+
 }
+
+
+
+
+
+
+
+
+
+

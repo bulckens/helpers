@@ -150,4 +150,52 @@ class ArrayHelper {
     return $array;
   }
 
+
+  // Hide sensitive data
+  public static function censor( $array ) {
+    foreach ( $array as $key => $value ) {
+      if ( is_string( $key ) ) {
+        if ( is_array( $value ) )
+          $array[$key] = self::censor( $value );
+
+        else if ( preg_match( '/passw/i', $key ) || $key == 'PHP_AUTH_PW' )
+          $array[$key] = 'PASSWORD HIDDEN';
+      }
+    }
+    
+    return $array;
+  }
+
+
+  // Render array to string
+  public static function toString( $array, $options = [] ) {
+    // merge options
+    $options = array_replace([
+      'strip'  => false
+    , 'censor' => false
+    , 'pretty' => false
+    ], $options );
+
+    // hide sensitive data
+    if ( $options['censor'] )
+      $array = self::censor( $array );
+
+    // prettyify array
+    if ( $options['pretty'] )
+      foreach ( $array as $key => $val )
+        $array[$key] = StringHelper::stringify( $val );
+
+    // render params to string
+    $string = print_r( $array, true );
+
+    // remove whitespace if required
+    if ( $options['strip'] )
+      $string = preg_replace( "/\n/", '', preg_replace( '/\s+/', ' ', $string ) );
+
+    // remove Array prefixes
+    $string = preg_replace( "/Array\s?/", '', $string );
+
+    return $string;
+  }
+
 }
