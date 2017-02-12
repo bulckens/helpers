@@ -39,6 +39,7 @@ class StringHelper {
       return ArrayHelper::toString( $value, [
         'strip'  => true
       , 'pretty' => true
+      , 'censor' => true
       ]);
 
     // null

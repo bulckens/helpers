@@ -200,7 +200,7 @@ class ArrayHelper {
 
 
   // Render nested arrays as string
-  public function pretty( $array ) {
+  public static function pretty( $array ) {
     if ( is_array( $array ) ) {
       foreach ( $array as $key => $val )
         $array[$key] = StringHelper::stringify( $val );
