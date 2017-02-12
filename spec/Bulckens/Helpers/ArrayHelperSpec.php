@@ -113,6 +113,12 @@ class ArrayHelperSpec extends ObjectBehavior {
   }
 
 
+  // Pretty method
+  function it_renders_nested_arrays_as_a_string() {
+    $this::pretty([ 'nested' => [ 'array' => 'as string' ] ])->shouldHaveKeyWithValue( 'nested', '( [array] => as string ) ' );
+  }
+
+
   // ToString method
   function it_converts_an_array_to_string() {
     $string = $this::toString([ 'falder' => 'aldera' ]);
