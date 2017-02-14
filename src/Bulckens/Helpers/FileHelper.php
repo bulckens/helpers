@@ -28,4 +28,13 @@ class FileHelper {
     return $list;
   }
 
+
+  // Find parent directory
+  public static function parent( $dir, $offset = 1 ) {
+    for ( $i = 0; $i < $offset ; $i++ )
+      $dir = dirname( $dir );
+
+    return $dir;
+  }
+  
 }
