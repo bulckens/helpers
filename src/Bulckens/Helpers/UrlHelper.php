@@ -13,9 +13,15 @@ class UrlHelper {
   }
   
   
-  // Helper function for root path
+  // Helper function for root path (bit trivial though...)
   public static function rootPath() {
     return '/';
+  }
+
+
+  // Test if SSL is enabled
+  public function ssl() {
+    return array_key_exists( 'HTTPS', $_SERVER ) && $_SERVER['HTTPS'] == 'on';
   }
 
 }
