@@ -20,7 +20,7 @@ class UrlHelper {
 
 
   // Test if SSL is enabled
-  public function ssl() {
+  public static function ssl() {
     return array_key_exists( 'HTTPS', $_SERVER ) && $_SERVER['HTTPS'] == 'on';
   }
 
