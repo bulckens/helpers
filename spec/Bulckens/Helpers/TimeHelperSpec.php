@@ -26,24 +26,54 @@ class TimeHelperSpec extends ObjectBehavior {
     $this::sec( '523ms' )->shouldBe( 0.523 );
   }
 
+  function it_parses_a_given_human_string_representation_to_time_in_milliseconds() {
+    $this::sec( '1 millisecond' )->shouldBe( 0.001 );
+    $this::sec( '36 milliseconds' )->shouldBe( 0.036 );
+  }
+
   function it_parses_a_given_string_representation_to_time_in_seconds() {
     $this::sec( '10s' )->shouldBe( 10 );
+  }
+
+  function it_parses_a_given_human_string_representation_to_time_in_seconds() {
+    $this::sec( '1 second' )->shouldBe( 1 );
+    $this::sec( '7 seconds' )->shouldBe( 7 );
   }
 
   function it_parses_a_given_string_representation_to_time_in_minutes() {
     $this::sec( '5m' )->shouldBe( 5 * 60 );
   }
 
+  function it_parses_a_given_human_string_representation_to_time_in_minutes() {
+    $this::sec( '1 minute' )->shouldBe( 60 );
+    $this::sec( '81 minutes' )->shouldBe( 81 * 60 );
+  }
+
   function it_parses_a_given_string_representation_to_time_in_hours() {
     $this::sec( '7h' )->shouldBe( 7* 60 * 60 );
+  }
+
+  function it_parses_a_given_human_string_representation_to_time_in_hours() {
+    $this::sec( '1 hour' )->shouldBe( 60 * 60 );
+    $this::sec( '0.5 hours' )->shouldBe( 0.5 * 60 * 60 );
   }
 
   function it_parses_a_given_string_representation_to_time_in_days() {
     $this::sec( '2d' )->shouldBe( 2 * 24 * 60 * 60 );
   }
 
+  function it_parses_a_given_human_string_representation_to_time_in_days() {
+    $this::sec( '1 day' )->shouldBe( 24 * 60 * 60 );
+    $this::sec( '6 days' )->shouldBe( 6 * 24 * 60 * 60 );
+  }
+
   function it_parses_a_given_string_representation_to_time_in_months() {
     $this::sec( '2M' )->shouldBe( intval( 365 / 12 * 2 * 24 * 60 * 60 ) );
+  }
+
+  function it_parses_a_given_human_string_representation_to_time_in_months() {
+    $this::sec( '1 month' )->shouldBe( intval( 365 / 12 * 24 * 60 * 60 ) );
+    $this::sec( '12 months' )->shouldBe( intval( 365 / 12 * 12 * 24 * 60 * 60 ) );
   }
 
   function it_parses_a_given_string_representation_to_time_in_zero_months() {
@@ -52,6 +82,11 @@ class TimeHelperSpec extends ObjectBehavior {
 
   function it_parses_a_given_string_representation_to_time_in_years() {
     $this::sec( '2y' )->shouldBe( 365 * 2 * 24 * 60 * 60 );
+  }
+
+  function it_parses_a_given_human_string_representation_to_time_in_years() {
+    $this::sec( '1 year' )->shouldBe( 365 * 24 * 60 * 60 );
+    $this::sec( '8 years' )->shouldBe( 365 * 8 * 24 * 60 * 60 );
   }
 
   function it_parses_a_given_string_representation_to_time_in_zero_years() {

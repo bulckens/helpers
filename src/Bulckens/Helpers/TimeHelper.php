@@ -20,7 +20,7 @@ class TimeHelper {
 
   // Parse time string to parts
   public static function parse( $time ) {
-    if ( preg_match( '/\A([0-9]+)(ms|s|m|h|d|M|y)\z/', $time, $match ) )
+    if ( preg_match( '/\A([0-9\.]+)(ms|s|m|h|d|M|y|(\s[acdehilmnorstuy]{3,12}))\z/', $time, $match ) )
       return $match;
   }
 
@@ -37,24 +37,38 @@ class TimeHelper {
 
       switch ( $parts[2] ) {
         case 'ms':
+        case ' millisecond':
+        case ' milliseconds':
           return $parts[1] / 1000;
         break;
         case 's':
+        case ' second':
+        case ' seconds':
           return $parts[1] * 1;
         break;
         case 'm':
+        case ' minute':
+        case ' minutes':
           return $parts[1] * 60;
         break;
         case 'h':
+        case ' hour':
+        case ' hours':
           return $parts[1] * 60 * 60;
         break;
         case 'd':
+        case ' day':
+        case ' days':
           return $parts[1] * 60 * 60 * 24;
         break;
         case 'M':
+        case ' month':
+        case ' months':
           return intval( 365 / 12 * $parts[1] * 24 * 60 * 60 );
         break;
         case 'y':
+        case ' year':
+        case ' years':
           return $parts[1] * 365 * 24 * 60 * 60;
         break;
       }
