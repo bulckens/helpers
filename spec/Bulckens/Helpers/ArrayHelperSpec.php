@@ -34,6 +34,16 @@ class ArrayHelperSpec extends ObjectBehavior {
   }
 
 
+  // Real difference between two arrays
+  function it_finds_the_difference_between_two_arrays() {
+    $diff = $this::diff([ 1, 2, 3 ], [ 2, 3, 4 ]);
+    $diff->shouldContain( 1 );
+    $diff->shouldNotContain( 2 );
+    $diff->shouldNotContain( 3 );
+    $diff->shouldContain( 4 );
+  }
+
+
   // ToXml method
   function it_converts_an_array_to_xml() {
     $xml = $this::toXml([ 'jarjar' => 'binks' ]);

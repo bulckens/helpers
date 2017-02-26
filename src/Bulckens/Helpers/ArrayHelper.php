@@ -16,6 +16,12 @@ class ArrayHelper {
   }
 
 
+  // Real difference between two given arrays
+  public static function diff( $first, $second ) {
+    return array_merge( array_diff( $first, $second ), array_diff( $second, $first ) );
+  }
+
+  
   // Intersect two object arrays
   public static function overlap( $first, $second ) {
     return array_uintersect( $first, $second, function ( $a1, $a2 ) {
