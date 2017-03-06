@@ -34,6 +34,14 @@ class UrlHelperSpec extends ObjectBehavior {
     $this::rootPath()->shouldBe( '/' );
   }
 
+  function it_tests_positive_if_the_given_path_matches_the_root_path() {
+    $this::rootPath( '/' )->shouldBe( true );
+  }
+
+  function it_tests_negative_if_the_given_path_does_not_match_the_root_path() {
+    $this::rootPath( '/fake/path' )->shouldBe( false );
+  }
+
 
   // Ssl method
   function it_tests_positive_for_ssl_enabled() {
