@@ -10,7 +10,6 @@ class UrlHelperSpec extends ObjectBehavior {
 
   function let() {
     global $_SERVER;
-    $_SERVER = [];
     $_SERVER['REQUEST_URI'] = '/some/fake/path';
   }
 
@@ -51,7 +50,21 @@ class UrlHelperSpec extends ObjectBehavior {
   }
 
   function it_tests_negative_for_ssl_disabled() {
+    global $_SERVER;
+    $_SERVER['HTTPS'] = 'off';
     $this::ssl()->shouldBe( false );
+  }
+
+
+  // Server method
+  function it_returns_the_server_array() {
+    $this::server()->shouldBeArray();
+  }
+
+  function it_returns_a_given_key_from_the_server_array() {
+    global $_SERVER;
+    $_SERVER['GIVEN'] = 'KEY';
+    $this::server( 'GIVEN' )->shouldBe( 'KEY' );
   }
 
 }
