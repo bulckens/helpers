@@ -69,6 +69,23 @@ class StringHelperSpec extends ObjectBehavior {
     $string->shouldStartWith( '( [la] => ( [la] => stdClass ) )' );
   }
 
+
+  // Generate method
+  function it_generates_a_random_string() {
+    $string = $this::generate();
+    $string->shouldMatch( '/^[A-Za-z0-9]{16}$/' );
+  }
+
+  function it_generates_a_random_string_with_a_given_size() {
+    $string = $this::generate( 128 );
+    $string->shouldMatch( '/^[A-Za-z0-9]{128}$/' );
+  }
+
+  function it_generates_a_random_string_with_a_given_size_and_optional_puntuaction() {
+    $string = $this::generate( 64, [ 'punctuation' => true ] );
+    $string->shouldMatch( '/^[A-Za-z0-9~!@#$%^&*(){}\[\],.\/?]{64}$/' );
+  }
+
 }
 
 

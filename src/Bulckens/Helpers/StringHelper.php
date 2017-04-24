@@ -56,5 +56,24 @@ class StringHelper {
 
     return $value;
   }
+
+
+  // Generate random string for passwords and such
+  public function generate( $length = 16, $options = [] ) {
+    // define selection of characters
+    $keys = array_merge( range( 0, 9 ), range( 'a', 'z' ), range( 'A', 'Z' ) );
+
+    // add punctuation if required
+    if ( isset( $options['punctuation'] ) && $options['punctuation'] === true )
+      $keys = array_merge( $keys, str_split( '~!@#$%^&*(){}[],./?' ) );
+
+    // build key
+    $key = '';
+
+    for ( $i = 0; $i < $length; $i++ )
+      $key .= $keys[mt_rand( 0, count( $keys ) - 1 )];
+    
+    return $key;
+  }
   
 }
