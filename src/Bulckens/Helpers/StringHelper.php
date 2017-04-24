@@ -59,7 +59,7 @@ class StringHelper {
 
 
   // Generate random string for passwords and such
-  public function generate( $length = 16, $options = [] ) {
+  public static function generate( $length = 16, $options = [] ) {
     // define selection of characters
     $keys = array_merge( range( 0, 9 ), range( 'a', 'z' ), range( 'A', 'Z' ) );
 
