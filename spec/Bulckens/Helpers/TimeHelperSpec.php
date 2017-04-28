@@ -21,12 +21,20 @@ class TimeHelperSpec extends ObjectBehavior {
   }
 
 
-  // datestamp method
-  function it_returns_current_date_to_the_second() {
-    $this::datestamp()->shouldMatch( '/^20[0-9]{12}$/' );
+  // Stamp method
+  function it_returns_a_stamp_with_current_date_to_the_second() {
+    $this::stamp()->shouldMatch( '/^20[0-9]{12}$/' );
   }
 
+  function it_returns_a_stamp_with_the_current_date_to_microsecond() {
+    $this::stamp( 'YmdHisu' )->shouldMatch( '/^20[0-9]{18}$/' );
+  }
+
+  function it_returns_a_stamp_with_the_current_date_to_microsecond_with_a_true_flag() {
+    $this::stamp( true )->shouldMatch( '/^20[0-9]{18}$/' );
+  }
   
+
   // Sec method
   function it_parses_a_given_string_representation_to_time_in_milliseconds() {
     $this::sec( '523ms' )->shouldBe( 0.523 );

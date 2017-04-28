@@ -3,6 +3,7 @@
 namespace Bulckens\Helpers;
 
 use Exception;
+use DateTime;
 
 class TimeHelper {
 
@@ -90,8 +91,11 @@ class TimeHelper {
 
 
   // Get the current date to the second
-  public static function datestamp() {
-    return date( 'YmdHis' );
+  public static function stamp( $format = 'YmdHis' ) {
+    if ( $format === true ) $format = 'YmdHisu';
+
+    $now = DateTime::createFromFormat( 'U.u', microtime( true ) );
+    return $now->format( $format );
   }
   
 }
