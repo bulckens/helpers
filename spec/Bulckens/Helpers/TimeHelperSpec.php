@@ -15,9 +15,15 @@ class TimeHelperSpec extends ObjectBehavior {
   }
 
   
-  // Ms method method
+  // Ms method
   function it_returns_current_milliseconds_as_alias() {
     $this::ms()->shouldBeDouble();
+  }
+
+
+  // datestamp method
+  function it_returns_current_date_to_the_second() {
+    $this::datestamp()->shouldMatch( '/^20[0-9]{12}$/' );
   }
 
   

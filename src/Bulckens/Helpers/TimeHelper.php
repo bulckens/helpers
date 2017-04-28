@@ -87,6 +87,12 @@ class TimeHelper {
 
     throw new TimeNotConvertableException( 'Expected string or number but got ' . gettype( $time ) );
   }
+
+
+  // Get the current date to the second
+  public static function datestamp() {
+    return date( 'YmdHis' );
+  }
   
 }
 
