@@ -23,6 +23,16 @@ class ArrayHelperSpec extends ObjectBehavior {
   }
 
 
+  // IsAssociative method
+  function it_tests_positive_if_an_array_is_associative() {
+    $this::isAssociative([ 'ass' => true, 'oci' => false, 'ative' => '?' ])->shouldBe( true );
+  }
+
+  function it_tests_negative_if_an_array_is_not_associative() {
+    $this::isAssociative([ 'ass', 'oci', 'ative' ])->shouldBe( false ); 
+  }
+
+
   // ToJson method
   function it_converts_an_array_to_json() {
     $this::toJson([ 'jarjar' => 'binks' ])->shouldBe( '{"jarjar":"binks"}' );
