@@ -12,8 +12,8 @@ class FileHelperSpec extends ObjectBehavior {
   function it_find_all_files_with_a_given_pattern_in_the_current_directory() {
     $rsearch = $this::rsearch( __DIR__, '/.*\.php/' );
     $rsearch->shouldHaveCount( 6 );
-    $rsearch[0]->shouldEndWith( 'spec/Bulckens/Helpers/ArrayHelperSpec.php' );
-    $rsearch[5]->shouldEndWith( 'spec/Bulckens/Helpers/UrlHelperSpec.php' );
+    $rsearch[0]->shouldEndWith( 'HelperSpec.php' );
+    $rsearch[5]->shouldEndWith( 'HelperSpec.php' );
   }
 
   function it_returns_an_empty_array_if_folder_does_not_exist() {
