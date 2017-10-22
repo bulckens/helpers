@@ -650,6 +650,7 @@ class MimeHelper {
   , [ 'ext' => 'xwd', 'mime' => 'image/x-xwd' ]
   , [ 'ext' => 'xwd', 'mime' => 'image/x-xwindowdump' ]
   , [ 'ext' => 'xyz', 'mime' => 'chemical/x-pdb' ]
+  , [ 'ext' => 'yaml', 'mime' => 'application/x-yaml' ]
   , [ 'ext' => 'yml', 'mime' => 'application/x-yaml' ]
   , [ 'ext' => 'yml', 'mime' => 'application/yaml' ]
   , [ 'ext' => 'yml', 'mime' => 'text/x-yaml' ]
