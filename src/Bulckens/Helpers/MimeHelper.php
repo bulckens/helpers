@@ -683,7 +683,7 @@ class MimeHelper {
 
 
   // Get the full mime map
-  public function map() {
+  public static function map() {
     return self::$map;
   }
 
