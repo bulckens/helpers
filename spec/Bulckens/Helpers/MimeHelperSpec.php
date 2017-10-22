@@ -23,9 +23,15 @@ class MimeHelperSpec extends ObjectBehavior {
 
 
   // Map (static) method
-  function it_returns_the_full_map_without_an_argument() {
+  function it_returns_the_full_map_with_extensions_as_keys() {
     $this::map()->shouldBeArray();
-    $this::map()->shouldHaveKeyWithValue( 'text/yaml', 'yml' );
+    $this::map()->shouldHaveKeyWithValue( 'yml', 'application/x-yaml' );
+    $this::map()->shouldNotHaveKeyWithValue( 'yml', 'text/yaml' );
+  }
+
+  function it_returns_the_full_map_with_mime_types_as_keys() {
+    $this::map( 'mime' )->shouldBeArray();
+    $this::map( 'mime' )->shouldHaveKeyWithValue( 'text/yaml', 'yml' );
   }
 
 
