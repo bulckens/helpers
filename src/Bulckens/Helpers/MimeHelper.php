@@ -639,7 +639,7 @@ class MimeHelper {
   , 'application/x-excel' => 'xlw'
   , 'application/x-msexcel' => 'xlw'
   , 'audio/xm' => 'xm'
-  , 'application/xml' => 'xml'
+  , 'application/xml' => 'xml' 
   , 'text/xml' => 'xml'
   , 'xgl/movie' => 'xmz'
   , 'application/x-vnd.ls-xpix' => 'xpix'
@@ -664,6 +664,7 @@ class MimeHelper {
   , 'text/x-script.zsh' => 'zsh'
   ];
 
+
   // Get extension for given mime type
   public static function get( $extension ) {
     // NOTE: array_flip() does not always handle given key order correctly; so the first instance is returned using a loop
@@ -671,12 +672,19 @@ class MimeHelper {
       if ( $extension == $value ) return $key;
     }
   }
+  
 
   // Get mime type for given extension
   public static function ext( $mime_type ) {
     if ( isset( self::$map[$mime_type] ) ) {
       return self::$map[$mime_type];
     }
+  }
+
+
+  // Get the full mime map
+  public function map() {
+    return self::$map;
   }
 
 }
