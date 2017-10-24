@@ -56,15 +56,33 @@ class ArrayHelper {
   }
 
 
-  // Convert a deep associatibe array to a delimited key array
-  public static function flattenDelimited( $array, $prefix = '', $delimiter = '.' ) {
+  // Convert a deep associative array to a delimited key array
+  public static function flattenDelimited( $array, $delimiter = '.', $prefix = '' ) {
     $result = [];
 
     foreach( $array as $key => $value ) {
-      if ( is_array( $value ) )
-        $result = $result + self::flattenDelimited( $value, $prefix . $key . $delimiter, $delimiter );
-      else
+      if ( is_array( $value ) ) {
+        $result = $result + self::flattenDelimited( $value, $delimiter, $prefix . $key . $delimiter );
+      } else {
         $result[$prefix . $key] = $value;
+      }
+    }
+
+    return $result;
+  }
+
+
+  // Convert a delimited key array to a deep associative array
+  public static function expandDelimited( $array, $delimiter = '.' ) {
+    $result = [];
+
+    foreach ( $array as $key => $value ) {
+      $parts = explode( $delimiter, $key );
+      $store = &$result;
+
+      foreach ( $parts as $part ) $store = &$store[$part];
+
+      $store = $value;
     }
 
     return $result;

@@ -207,6 +207,133 @@ class ArrayHelperSpec extends ObjectBehavior {
     $string->shouldNotContain( 'Array' );
   }
 
+
+  // FlattendDelimited (static) method
+  function it_flattens_a_multidimensional_array_to_an_array_with_delimited_keys() {
+    $array = [
+      'a' => [
+        'b' => 'c'
+      , 'd' => 'e'
+      , 'f' => [
+          'g' => 'h'
+        ]
+      ]
+    , 'i' => 'j'
+    , 'k' => [
+        'l' => [
+          'm' => 'n' 
+        ]
+      ]
+    ];
+
+    $flat = $this::flattenDelimited( $array );
+    $flat->shouldHaveKeyWithValue( 'a.b', 'c' );
+    $flat->shouldHaveKeyWithValue( 'a.d', 'e' );
+    $flat->shouldHaveKeyWithValue( 'a.f.g', 'h' );
+    $flat->shouldHaveKeyWithValue( 'i', 'j' );
+    $flat->shouldHaveKeyWithValue( 'k.l.m', 'n' );
+  }
+
+  function it_flattens_a_multidimensional_array_to_an_array_with_custom_delimited_keys() {
+    $array = [
+      'a' => [
+        'b' => 'c'
+      , 'd' => 'e'
+      , 'f' => [
+          'g' => 'h'
+        ]
+      ]
+    , 'i' => 'j'
+    , 'k' => [
+        'l' => [
+          'm' => 'n' 
+        ]
+      ]
+    ];
+
+    $flat = $this::flattenDelimited( $array, ':' );
+    $flat->shouldHaveKeyWithValue( 'a:b', 'c' );
+    $flat->shouldHaveKeyWithValue( 'a:d', 'e' );
+    $flat->shouldHaveKeyWithValue( 'a:f:g', 'h' );
+    $flat->shouldHaveKeyWithValue( 'i', 'j' );
+    $flat->shouldHaveKeyWithValue( 'k:l:m', 'n' );
+  }
+
+  function it_flattens_a_multidimensional_array_to_an_array_with_delimited_keys_and_a_custom_prefix() {
+    $array = [
+      'a' => [
+        'b' => 'c'
+      , 'd' => 'e'
+      , 'f' => [
+          'g' => 'h'
+        ]
+      ]
+    , 'i' => 'j'
+    , 'k' => [
+        'l' => [
+          'm' => 'n' 
+        ]
+      ]
+    ];
+
+    $flat = $this::flattenDelimited( $array, '-', 'x-' );
+    $flat->shouldHaveKeyWithValue( 'x-a-b', 'c' );
+    $flat->shouldHaveKeyWithValue( 'x-a-d', 'e' );
+    $flat->shouldHaveKeyWithValue( 'x-a-f-g', 'h' );
+    $flat->shouldHaveKeyWithValue( 'x-i', 'j' );
+    $flat->shouldHaveKeyWithValue( 'x-k-l-m', 'n' );
+  }
+
+
+  // ExpandDelimited (static) method
+  function it_expands_an_array_with_delimited_keys_to_a_multidimensional_array() {
+    $array = [
+      'a.b' => 'c'
+    , 'a.d' => 'e'
+    , 'a.f.g' => 'h'
+    , 'i' => 'j'
+    , 'k.l.m' => 'n'
+    ];
+
+    $expanded = $this::expandDelimited( $array );
+    $expanded->shouldHaveKey( 'a' );
+    $expanded['a']->shouldBeArray();
+    $expanded['a']->shouldHaveKeyWithValue( 'b', 'c' );
+    $expanded['a']->shouldHaveKeyWithValue( 'd', 'e' );
+    $expanded['a']->shouldHaveKey( 'f' );
+    $expanded['a']['f']->shouldHaveKeyWithValue( 'g', 'h' );
+    $expanded->shouldHaveKeyWithValue( 'i', 'j' );
+    $expanded->shouldHaveKey( 'k' );
+    $expanded['k']->shouldBeArray();
+    $expanded['k']->shouldHaveKey( 'l' );
+    $expanded['k']['l']->shouldBeArray();
+    $expanded['k']['l']->shouldHaveKeyWithValue( 'm', 'n' );
+  }
+
+  function it_expands_an_array_with_delimited_keys_to_a_multidimensional_array_using_a_custom_delimiter() {
+    $array = [
+      'a:b' => 'c'
+    , 'a:d' => 'e'
+    , 'a:f:g' => 'h'
+    , 'i' => 'j'
+    , 'k:l:m' => 'n'
+    ];
+
+    $expanded = $this::expandDelimited( $array, ':' );
+    $expanded->shouldHaveKey( 'a' );
+    $expanded['a']->shouldBeArray();
+    $expanded['a']->shouldHaveKeyWithValue( 'b', 'c' );
+    $expanded['a']->shouldHaveKeyWithValue( 'd', 'e' );
+    $expanded['a']->shouldHaveKey( 'f' );
+    $expanded['a']['f']->shouldHaveKeyWithValue( 'g', 'h' );
+    $expanded->shouldHaveKeyWithValue( 'i', 'j' );
+    $expanded->shouldHaveKey( 'k' );
+    $expanded['k']->shouldBeArray();
+    $expanded['k']->shouldHaveKey( 'l' );
+    $expanded['k']['l']->shouldBeArray();
+    $expanded['k']['l']->shouldHaveKeyWithValue( 'm', 'n' );
+  }
+
 }
 
 
