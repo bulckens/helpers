@@ -47,4 +47,66 @@ class MemoryHelperSpec extends ObjectBehavior {
     $this::humanize( 1024 * 1024 * 1024 * 6000 * 1000 )->shouldBe( '6.00 PB' );
   }
 
+
+  // Interpret method
+  function it_interprets_zero_bytes() {
+    $this::interpret( '0 bytes' )->shouldBe( 0 );
+  }
+
+  function it_interprets_one_byte_shorthand() {
+    $this::interpret( '1 B' )->shouldBe( 1 );
+  }
+
+  function it_interprets_many_bytes_without_spaces() {
+    $this::interpret( '128B' )->shouldBe( 128 );
+  }
+
+  function it_interprets_kilobytes() {
+    $this::interpret( '20 KB' )->shouldBe( 20 * 1024 );
+  }
+
+  function it_interprets_kilobytes_without_spaces() {
+    $this::interpret( '256KB' )->shouldBe( 256 * 1024 );
+  }
+
+  function it_interprets_megabytes() {
+    $this::interpret( '17 MB' )->shouldBe( 17 * 1024 * 1024 );
+  }
+
+  function it_interprets_megabytes_without_spaces() {
+    $this::interpret( '5MB' )->shouldBe( 5 * 1024 * 1024 );
+  }
+
+  function it_interprets_gigabytes() {
+    $this::interpret( '1.5 GB' )->shouldBe( 1.5 * 1024 * 1024 * 1024 );
+  }
+
+  function it_interprets_gigabytes_without_spaces() {
+    $this::interpret( '300GB' )->shouldBe( 300 * 1024 * 1024 * 1024 );
+  }
+
+  function it_interprets_terabytes() {
+    $this::interpret( '.25 TB' )->shouldBe( .25 * 1024 * 1024 * 1024 * 1024 );
+  }
+
+  function it_interprets_terabytes_without_spaces() {
+    $this::interpret( '3.14159265358979TB' )->shouldBe( 3.14159265358979 * 1024 * 1024 * 1024 * 1024 );
+  }
+
+  function it_interprets_petabytes() {
+    $this::interpret( '1.5e3 PB' )->shouldBe( 1.5e3 * 1024 * 1024 * 1024 * 1024 * 1024 );
+  }
+
+  function it_interprets_petabytes_without_spaces() {
+    $this::interpret( '.8PB' )->shouldBe( .8 * 1024 * 1024 * 1024 * 1024 * 1024 );
+  }
+
+  function it_fails_when_the_given_value_is_uninterpretable() {
+    $this::shouldThrow( 'Bulckens\Helpers\MemoryHelperInterpretValueInvalidException' )->duringInterpret( 'mA sta B a' );
+  }
+
+  function it_fails_when_no_numeric_value_is_provided() {
+    $this::shouldThrow( 'Bulckens\Helpers\MemoryHelperInterpretValueNotnumericException' )->duringInterpret( ' KB' );
+  }
+
 }
