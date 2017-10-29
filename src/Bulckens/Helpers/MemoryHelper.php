@@ -43,6 +43,9 @@ class MemoryHelper {
 
   // Interpret memory representation
   public static function interpret( $memory ) {
+    // detect numeric value and skip processing if given
+    if ( is_numeric( $memory ) ) return $memory;
+
     // detect parsable value
     if ( preg_match( '/^((\d+)?(\.\d+(e\d+)?)?)\s?([BGMKPT]{1,2}|bytes?)$/', $memory, $matches ) ) {
       // verify numeric value

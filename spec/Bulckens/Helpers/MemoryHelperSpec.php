@@ -101,6 +101,10 @@ class MemoryHelperSpec extends ObjectBehavior {
     $this::interpret( '.8PB' )->shouldBe( .8 * 1024 * 1024 * 1024 * 1024 * 1024 );
   }
 
+  function it_accepts_a_purely_numeric_value_and_interprets_it_as_bytes() {
+    $this::interpret( 568896 )->shouldBe( 568896 );
+  }
+
   function it_fails_when_the_given_value_is_uninterpretable() {
     $this::shouldThrow( 'Bulckens\Helpers\MemoryHelperInterpretValueInvalidException' )->duringInterpret( 'mA sta B a' );
   }
