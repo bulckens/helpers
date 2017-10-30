@@ -86,6 +86,33 @@ class StringHelperSpec extends ObjectBehavior {
     $string->shouldMatch( '/^[A-Za-z0-9~!@#$%^&*(){}\[\],.\/?]{64}$/' );
   }
 
+
+  // Partition method
+  function it_generates_a_partitioned_string_from_a_given_string() {
+    $string = $this::partition( 'abcdefghijkl', 3 );
+    $string->shouldBe( 'abc def ghi jkl' );
+  }
+
+  function it_pads_a_string_on_the_left_before_partitioning() {
+    $string = $this::partition( 'abc', 2, '|', [ 'padding' => 10, 'with' => '-' ]);
+    $string->shouldBe( '--|--|--|-a|bc' );
+  }
+
+  function it_pads_a_string_on_the_right_before_partitioning() {
+    $string = $this::partition( 'abcde', 3, '.', [ 'padding' => 21, 'with' => '*', 'on' => 'right' ]);
+    $string->shouldBe( 'abc.de*.***.***.***.***.***' );
+  }
+
+  function it_pads_a_string_on_the_right_before_partitioning_from_the_right() {
+    $string = $this::partition( 'abcdef', 4, '.', [ 'padding' => 21, 'with' => '*', 'on' => 'right', 'from' => 'right' ]);
+    $string->shouldBe( 'bcde.f***.****.****.****' );
+  }
+
+  function it_pads_a_number_on_the_left_before_partitioning() {
+    $string = $this::partition( 8945, 3, '/', [ 'padding' => 9, 'with' => 0 ]);
+    $string->shouldBe( '000/008/945' );
+  }
+
 }
 
 
