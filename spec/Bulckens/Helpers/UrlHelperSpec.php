@@ -14,6 +14,21 @@ class UrlHelperSpec extends ObjectBehavior {
   }
 
 
+  // Parse mthod
+  function it_parses_the_given_url() {
+    $uri = $this::parse( 'http://domdom.com/fatty/feast.json?some=param' );
+    $uri->shouldBeArray();
+    $uri->shouldHaveKeyWithValue( 'scheme', 'http' );
+    $uri->shouldHaveKeyWithValue( 'host', 'domdom.com' );
+    $uri->shouldHaveKeyWithValue( 'path', '/fatty/feast.json' );
+    $uri->shouldHaveKeyWithValue( 'dirname', '/fatty' );
+    $uri->shouldHaveKeyWithValue( 'basename', 'feast.json' );
+    $uri->shouldHaveKeyWithValue( 'extension', 'json' );
+    $uri->shouldHaveKeyWithValue( 'filename', 'feast' );
+    $uri->shouldHaveKeyWithValue( 'query', 'some=param' );
+  }
+
+
   // CurrentPath method
   function it_returns_the_current_path() {
     $this::currentPath()->shouldBe( '/some/fake/path' );

@@ -4,6 +4,20 @@ namespace Bulckens\Helpers;
 
 class UrlHelper {
 
+  // Parse a url
+  public static function parse( $url ) {
+    // native parse
+    $url = parse_url( $url );
+
+    // add path base and format
+    if ( isset( $url['path'])) {
+      $url = array_replace( $url, pathinfo( $url['path']));
+    }
+
+    return $url;
+  }
+
+
   // Get or test current path
   public static function currentPath( $path = null ) {
     if ( is_null( $path ) )
