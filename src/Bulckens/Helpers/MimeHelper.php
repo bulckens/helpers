@@ -275,6 +275,7 @@ class MimeHelper {
   , [ 'ext' => 'm2v', 'mime' => 'video/mpeg' ]
   , [ 'ext' => 'm3u', 'mime' => 'audio/x-mpequrl' ]
   , [ 'ext' => 'man', 'mime' => 'application/x-troff-man' ]
+  , [ 'ext' => 'map', 'mime' => 'application/json' ]
   , [ 'ext' => 'map', 'mime' => 'application/x-navimap' ]
   , [ 'ext' => 'mar', 'mime' => 'text/plain' ]
   , [ 'ext' => 'mbd', 'mime' => 'application/mbedlet' ]
