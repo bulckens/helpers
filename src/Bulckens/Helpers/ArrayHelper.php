@@ -18,7 +18,13 @@ class ArrayHelper {
 
   // Real difference between two given arrays
   public static function diff( $first, $second ) {
-    return array_merge( array_diff( $first, $second ), array_diff( $second, $first ) );
+    return array_merge( array_diff( $first, $second ), array_diff( $second, $first ));
+  }
+  
+  
+  // Find duplicates in an array
+  public static function duplicates( $array ) {
+    return array_unique( array_diff_assoc( $array, array_unique( $array )));
   }
 
   
@@ -38,7 +44,7 @@ class ArrayHelper {
 
   // Get value from associative array with null fallback
   public static function valueFrom( $array, $key ) {
-    if ( isset( $array[$key] ) )
+    if ( isset( $array[$key] ))
       return $array[$key];
   }
 
@@ -46,7 +52,7 @@ class ArrayHelper {
   // Get values for key from an Eloquent collection
   public static function valuesFromCollection( $key, $collection ) {
     // make sure the list is an array
-    if ( ! is_array( $collection ) )
+    if ( ! is_array( $collection ))
       $collection = $collection->toArray();
 
     // fetch all individual keys
@@ -61,7 +67,7 @@ class ArrayHelper {
     $result = [];
 
     foreach( $array as $key => $value ) {
-      if ( is_array( $value ) ) {
+      if ( is_array( $value )) {
         $result = $result + self::flattenDelimited( $value, $delimiter, $prefix . $key . $delimiter );
       } else {
         $result[$prefix . $key] = $value;
@@ -122,16 +128,16 @@ class ArrayHelper {
     ], $options );
 
     // ensure xml object
-    if ( is_null( $options['xml'] ) )
+    if ( is_null( $options['xml'] ))
       $options['xml'] = new SimpleXMLElement( "<{$options['root']}/>" );
     
     // dig through array structure
     foreach ( $array as $key => $value ) {
       // dealing with <0/>..<n/> issues
-      if ( is_numeric( $key ) ) $key = Str::singular( $options['parent'] ?: 'item' );
+      if ( is_numeric( $key )) $key = Str::singular( $options['parent'] ?: 'item' );
 
       // make sure objects are converted to an array where possible
-      if ( is_object( $value ) && method_exists( $value, 'toArray' ) )
+      if ( is_object( $value ) && method_exists( $value, 'toArray' ))
         $value = $value->toArray();
       
       // test if a recruisive call is required
@@ -157,7 +163,7 @@ class ArrayHelper {
   // Remove nested arrays introduced by semantic xml markup
   protected static function flattenFromXml( $array ) {
     foreach ( $array as $k => $value ) {
-      if ( is_array( $value ) ) {
+      if ( is_array( $value )) {
         // get singular name of node
         $s = Str::singular( $k );
 
@@ -178,8 +184,8 @@ class ArrayHelper {
   // Hide sensitive data
   public static function censor( $array ) {
     foreach ( $array as $key => $value ) {
-      if ( is_string( $key ) ) {
-        if ( is_array( $value ) )
+      if ( is_string( $key )) {
+        if ( is_array( $value ))
           $array[$key] = self::censor( $value );
 
         else if ( preg_match( '/passw/i', $key ) || $key == 'PHP_AUTH_PW' )
@@ -214,7 +220,7 @@ class ArrayHelper {
 
     // remove whitespace if required
     if ( $options['strip'] )
-      $string = preg_replace( "/\n/", '', preg_replace( '/\s+/', ' ', $string ) );
+      $string = preg_replace( "/\n/", '', preg_replace( '/\s+/', ' ', $string ));
 
     // remove Array prefixes
     $string = preg_replace( "/Array\s?/", '', $string );
@@ -225,7 +231,7 @@ class ArrayHelper {
 
   // Render nested arrays as string
   public static function pretty( $array ) {
-    if ( is_array( $array ) ) {
+    if ( is_array( $array )) {
       foreach ( $array as $key => $val )
         $array[$key] = StringHelper::stringify( $val );
     }

@@ -52,6 +52,19 @@ class ArrayHelperSpec extends ObjectBehavior {
     $diff->shouldNotContain( 3 );
     $diff->shouldContain( 4 );
   }
+  
+  
+  // Duplicates
+  function it_finds_the_duplicates_in_an_array() {
+    $duplicates = $this::duplicates([ 1, 2, 3, 4, 3, 5, 6 ]);
+    $duplicates->shouldHaveCount( 1 );
+    $duplicates->shouldContain( 3 );
+  }
+  
+  function it_returns_an_empty_array_if_no_duplicates_are_found() {
+    $duplicates = $this::duplicates([ 9, 8, 7, 6, 5, 4, 3, 2, 1 ]);
+    $duplicates->shouldHaveCount( 0 );
+  }
 
 
   // ToXml method
