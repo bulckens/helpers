@@ -20,21 +20,21 @@ class ArrayHelper {
   public static function diff( $first, $second ) {
     return array_merge( array_diff( $first, $second ), array_diff( $second, $first ));
   }
-  
-  
+
+
   // Find duplicates in an array
   public static function duplicates( $array ) {
     return array_unique( array_diff_assoc( $array, array_unique( $array )));
   }
 
-  
+
   // Intersect two object arrays
   public static function overlap( $first, $second ) {
     return array_uintersect( $first, $second, function ( $a1, $a2 ) {
       return $a1 == $a2;
     });
   }
-  
+
 
   // Test for associative array
   public static function isAssociative( $array ) {
@@ -116,7 +116,7 @@ class ArrayHelper {
   public static function fromYaml( $yaml ) {
     return Yaml::parse( $yaml );
   }
-  
+
 
   // Convert array to XML
   public static function toXml( $array, $options = [] ) {
@@ -130,7 +130,7 @@ class ArrayHelper {
     // ensure xml object
     if ( is_null( $options['xml'] ))
       $options['xml'] = new SimpleXMLElement( "<{$options['root']}/>" );
-    
+
     // dig through array structure
     foreach ( $array as $key => $value ) {
       // dealing with <0/>..<n/> issues
@@ -139,7 +139,7 @@ class ArrayHelper {
       // make sure objects are converted to an array where possible
       if ( is_object( $value ) && method_exists( $value, 'toArray' ))
         $value = $value->toArray();
-      
+
       // test if a recruisive call is required
       is_array( $value )
         ? self::toXml( $value, [ 'xml' => $options['xml']->addChild( $key ), 'parent' => $key ] )
@@ -154,7 +154,7 @@ class ArrayHelper {
   public static function fromXml( $xml ) {
     // parse xml to array
     $xml = simplexml_load_string( $xml, 'SimpleXMLElement', LIBXML_NOCDATA );
-    $raw = json_decode( json_encode( $xml ), true );    
+    $raw = json_decode( json_encode( $xml ), true );
 
     return self::flattenFromXml( $raw );
   }
@@ -174,7 +174,7 @@ class ArrayHelper {
 
         // perform a deep traverse
         $array[$k] = self::flattenFromXml( $array[$k] );
-      } 
+      }
     }
 
     return $array;
@@ -187,12 +187,11 @@ class ArrayHelper {
       if ( is_string( $key )) {
         if ( is_array( $value ))
           $array[$key] = self::censor( $value );
-
-        else if ( preg_match( '/passw/i', $key ) || $key == 'PHP_AUTH_PW' )
-          $array[$key] = 'PASSWORD HIDDEN';
+        else
+          $array[$key] = StringHelper::censor( $key, $value );
       }
     }
-    
+
     return $array;
   }
 
@@ -232,8 +231,9 @@ class ArrayHelper {
   // Render nested arrays as string
   public static function pretty( $array ) {
     if ( is_array( $array )) {
-      foreach ( $array as $key => $val )
-        $array[$key] = StringHelper::stringify( $val );
+      foreach ( $array as $key => $val ) {
+        $array[$key] = StringHelper::censor( $key, StringHelper::stringify( $val ));
+      }
     }
 
     return $array;

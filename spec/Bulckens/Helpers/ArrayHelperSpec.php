@@ -9,7 +9,7 @@ use Prophecy\Argument;
 use ArrayIterator;
 
 class ArrayHelperSpec extends ObjectBehavior {
-  
+
   // Without method
   function it_removes_an_item_form_the_given_array() {
     $this::without( 3, [ 1, 2, 3, 'a', 3 ] )->shouldHaveCount( 3 );
@@ -29,7 +29,7 @@ class ArrayHelperSpec extends ObjectBehavior {
   }
 
   function it_tests_negative_if_an_array_is_not_associative() {
-    $this::isAssociative([ 'ass', 'oci', 'ative' ])->shouldBe( false ); 
+    $this::isAssociative([ 'ass', 'oci', 'ative' ])->shouldBe( false );
   }
 
 
@@ -52,15 +52,15 @@ class ArrayHelperSpec extends ObjectBehavior {
     $diff->shouldNotContain( 3 );
     $diff->shouldContain( 4 );
   }
-  
-  
+
+
   // Duplicates
   function it_finds_the_duplicates_in_an_array() {
     $duplicates = $this::duplicates([ 1, 2, 3, 4, 3, 5, 6 ]);
     $duplicates->shouldHaveCount( 1 );
     $duplicates->shouldContain( 3 );
   }
-  
+
   function it_returns_an_empty_array_if_no_duplicates_are_found() {
     $duplicates = $this::duplicates([ 9, 8, 7, 6, 5, 4, 3, 2, 1 ]);
     $duplicates->shouldHaveCount( 0 );
@@ -131,24 +131,34 @@ class ArrayHelperSpec extends ObjectBehavior {
 
   // Censor method
   function it_strips_password_values_from_given_accociative_array() {
-    $this::censor([ 'password' => 'abc123' ])->shouldHaveKeyWithValue( 'password', 'PASSWORD HIDDEN' );
+    $this::censor([ 'password' => 'abc123' ])
+      ->shouldHaveKeyWithValue( 'password', '[SENSITIVE DATA HIDDEN]' );
   }
 
   function it_strips_password_values_from_given_accociative_array_with_nested_arrays() {
-    $array = $this::censor([ 'password' => 'abc123', 'other' => [ 'password_confirmation' => 'abc123' ] ]);
+    $array = $this::censor([
+      'password' => 'abc123', 'other' => [ 'password_confirmation' => 'abc123' ]
+    ]);
 
-    $array->shouldHaveKeyWithValue( 'password', 'PASSWORD HIDDEN' );
-    $array['other']->shouldHaveKeyWithValue( 'password_confirmation', 'PASSWORD HIDDEN' );
+    $array->shouldHaveKeyWithValue( 'password', '[SENSITIVE DATA HIDDEN]' );
+    $array['other']->shouldHaveKeyWithValue( 'password_confirmation', '[SENSITIVE DATA HIDDEN]' );
   }
 
   function it_strips_php_auth_pw_values_from_given_accociative_array() {
-    $this::censor([ 'PHP_AUTH_PW' => '121212' ])->shouldHaveKeyWithValue( 'PHP_AUTH_PW', 'PASSWORD HIDDEN' );
+    $this::censor([ 'PHP_AUTH_PW' => '121212' ])
+      ->shouldHaveKeyWithValue( 'PHP_AUTH_PW', '[SENSITIVE DATA HIDDEN]' );
   }
 
 
   // Pretty method
   function it_renders_nested_arrays_as_a_string() {
-    $this::pretty([ 'nested' => [ 'array' => 'as string' ] ])->shouldHaveKeyWithValue( 'nested', '( [array] => as string ) ' );
+    $this::pretty([ 'nested' => [ 'array' => 'as string' ] ])
+      ->shouldHaveKeyWithValue( 'nested', '( [array] => as string ) ' );
+  }
+
+  function it_censors_sensitive_data_by_default() {
+    $this::pretty([ 'password' => 'Sup3rS3cr3t!' ])
+      ->shouldHaveKeyWithValue( 'password', '[SENSITIVE DATA HIDDEN]' );
   }
 
 
@@ -166,7 +176,7 @@ class ArrayHelperSpec extends ObjectBehavior {
 
   function it_does_censor_sensitive_data_if_specifically_required() {
     $string = $this::toString([ 'sensitive' => [ 'password' => 'hihihi' ] ], [ 'censor' => true ]);
-    $string->shouldContain( '[password] => PASSWORD HIDDEN' );
+    $string->shouldContain( '[password] => [SENSITIVE DATA HIDDEN]' );
     $string->shouldNotContain( 'hihihi' );
   }
 
@@ -234,7 +244,7 @@ class ArrayHelperSpec extends ObjectBehavior {
     , 'i' => 'j'
     , 'k' => [
         'l' => [
-          'm' => 'n' 
+          'm' => 'n'
         ]
       ]
     ];
@@ -259,7 +269,7 @@ class ArrayHelperSpec extends ObjectBehavior {
     , 'i' => 'j'
     , 'k' => [
         'l' => [
-          'm' => 'n' 
+          'm' => 'n'
         ]
       ]
     ];
@@ -284,7 +294,7 @@ class ArrayHelperSpec extends ObjectBehavior {
     , 'i' => 'j'
     , 'k' => [
         'l' => [
-          'm' => 'n' 
+          'm' => 'n'
         ]
       ]
     ];
@@ -348,13 +358,3 @@ class ArrayHelperSpec extends ObjectBehavior {
   }
 
 }
-
-
-
-
-
-
-
-
-
-

@@ -47,6 +47,21 @@ class StringHelperSpec extends ObjectBehavior {
   }
 
 
+  // Censor method
+  function it_censors_a_string_for_a_given_sensitive_key() {
+    $this::censor( 'password', '12345678' )->shouldBe( '[SENSITIVE DATA HIDDEN]' );
+    $this::censor( 'PHP_AUTH_PW', '12345678' )->shouldBe( '[SENSITIVE DATA HIDDEN]' );
+  }
+
+  function it_does_not_censor_a_string_for_a_non_sensitive_key() {
+    $this::censor( 'panda', '12345678' )->shouldBe( '12345678' );
+  }
+
+  function it_censors_a_string_with_a_given_set_of_sensitive_keys() {
+    $this::censor( 'panda', '12345678', [ 'panda' ])->shouldBe( '[SENSITIVE DATA HIDDEN]' );
+  }
+
+
   // Stringify method
   function it_converts_null_to_a_string() {
     $this::stringify( null )->shouldBe( 'null' );
@@ -114,24 +129,3 @@ class StringHelperSpec extends ObjectBehavior {
   }
 
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

@@ -23,7 +23,7 @@ class StringHelper {
     for ( $i = 0; $i < strlen( $hex ) -1; $i += 2 ) {
       $string .= chr( hexdec( $hex[$i] . $hex[$i + 1] ) );
     }
-    
+
     return $string;
   }
 
@@ -31,6 +31,20 @@ class StringHelper {
   // Test for blank value
   public static function isBlank( $value ) {
     return !! preg_match( '/\A(\s+)?\z/', $value );
+  }
+
+
+  // Censor a string by a given key
+  public static function censor( $key, $value, $keys = [] ) {
+    // sensitive keys
+    $keys = array_replace([ 'PHP_AUTH_PW' ], $keys );
+
+    // find password replated keys
+    if ( preg_match( '/passw/i', $key ) || in_array( $key, $keys )) {
+      return '[SENSITIVE DATA HIDDEN]';
+    }
+
+    return $value;
   }
 
 
@@ -48,13 +62,10 @@ class StringHelper {
     // null
     if ( is_null( $value ) ) return 'null';
 
-    // number
-    if ( is_numeric( $value ) ) return "$value";
-
     // object
     if ( is_object( $value ) ) return get_class( $value );
 
-    return $value;
+    return "$value";
   }
 
 
@@ -74,7 +85,7 @@ class StringHelper {
     for ( $i = 0; $i < $length; $i++ ) {
       $key .= $keys[mt_rand( 0, count( $keys ) - 1 )];
     }
-    
+
     return $key;
   }
 
@@ -104,7 +115,7 @@ class StringHelper {
 
       $value = str_pad( $value, $o['padding'], $o['with'], $on );
     }
-    
+
     // detect partitioning from the right
     if ( $o['from'] == 'right' ) $value = strrev( $value );
 
@@ -119,26 +130,5 @@ class StringHelper {
 
     return $value;
   }
-  
+
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
