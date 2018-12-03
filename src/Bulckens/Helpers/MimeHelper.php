@@ -699,7 +699,7 @@ class MimeHelper {
 
     // gather map
     foreach ( self::$map as $pair ) {
-      if ( ! isset( $map[$pair[$key]] ) ) {
+      if ( ! isset( $map[$pair[$key]] )) {
         $map[$pair[$key]] = $pair[$val];
       }
     }
@@ -707,4 +707,17 @@ class MimeHelper {
     return $map;
   }
 
+
+  // Registers a new extenions and mimetype
+  public static function register( $ext, $mime ) {
+    if ( self::get( $ext ))
+      throw new MimeHelperExtensionAlreadyRegisteredException( "Extension '$ext' is already registered" );
+    
+    array_push( self::$map, [ 'ext' => $ext, 'mime' => $mime ]);
+  }
+
 }
+
+
+// Exceptions
+class MimeHelperExtensionAlreadyRegisteredException extends \Exception {}
