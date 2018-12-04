@@ -21,7 +21,7 @@ class TimeHelper {
 
   // Parse time string to parts
   public static function parse( $time ) {
-    if ( preg_match( '/\A([0-9\.]+)(ms|s|m|h|d|M|y|(\s[acdehilmnorstuy]{3,12}))\z/', $time, $match ) )
+    if ( preg_match( '/\A([0-9\.]+)(ms|s|m|h|d|M|y|(\s[acdehilmnorstuy]{3,12}))\z/', $time, $match ))
       return $match;
   }
 

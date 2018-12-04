@@ -710,14 +710,10 @@ class MimeHelper {
 
   // Registers a new extenions and mimetype
   public static function register( $ext, $mime ) {
-    if ( self::get( $ext ))
-      throw new MimeHelperExtensionAlreadyRegisteredException( "Extension '$ext' is already registered" );
+    if ( $added = empty( self::get( $ext )))
+      array_push( self::$map, [ 'ext' => $ext, 'mime' => $mime ]);
     
-    array_push( self::$map, [ 'ext' => $ext, 'mime' => $mime ]);
+    return $added;
   }
 
 }
-
-
-// Exceptions
-class MimeHelperExtensionAlreadyRegisteredException extends \Exception {}

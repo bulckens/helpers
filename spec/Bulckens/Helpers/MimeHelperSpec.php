@@ -100,13 +100,14 @@ class MimeHelperSpec extends ObjectBehavior {
   // Register method
   function it_registeres_a_new_mime_type() {
     $this::get( 'fmpxml' )->shouldBe( null );
-    $this::register( 'fmpxml', 'application/xml' );
+    $this::register( 'fmpxml', 'application/xml' )->shouldBe( true );
     $this::get( 'fmpxml' )->shouldBe( 'application/xml' );
   }
 
   function it_does_not_allow_an_existing_mime_type_to_be_reregistered() {
-    $this::shouldThrow( 'Bulckens\Helpers\MimeHlperExtensionAlreadyRegisteredException' )
-      ->duringRegister( 'xml' , 'trash/bag' );
+    $this::get( 'xml' )->shouldBe( 'application/xml' );
+    $this::register( 'xml', 'trash/bag' )->shouldBe( false );
+    $this::get( 'xml' )->shouldBe( 'application/xml' );
   }
 
 }
