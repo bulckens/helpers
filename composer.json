@@ -13,10 +13,6 @@
         "symfony/yaml": "^5.1",
         "illuminate/support": "^6.11"
     },
-    "dist": {
-        "url": "git@github.com:bulckens/helpers.git",
-        "type": "git"
-    },
     "autoload": {
         "psr-0": {
             "Bulckens": "src/"
