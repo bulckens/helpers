@@ -10,8 +10,8 @@
         }
     ],
     "require": {
-        "symfony/yaml": "^3.1",
-        "illuminate/support": "^5.3"
+        "symfony/yaml": "^5.1",
+        "illuminate/support": "^6.11"
     },
     "dist": {
         "url": "git@github.com:bulckens/helpers.git",
@@ -23,6 +23,6 @@
         }
     },
     "require-dev": {
-        "phpspec/phpspec": "^3.2"
+        "phpspec/phpspec": "^6.2"
     }
 }
