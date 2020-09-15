@@ -11,7 +11,7 @@ class FileHelper {
   // Recruisive directory search
   public static function rsearch( $folder, $pattern ) {
     $list = [];
-    
+
     // make sure directory exists
     if ( file_exists( $folder ) ) {
       // define folder and prepare iterator
@@ -24,7 +24,7 @@ class FileHelper {
       foreach ( $files as $file )
         $list = array_merge( $list, $file );
     }
-    
+
     return $list;
   }
 
@@ -36,5 +36,5 @@ class FileHelper {
 
     return $dir;
   }
-  
+
 }

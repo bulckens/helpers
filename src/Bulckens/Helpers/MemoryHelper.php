@@ -11,7 +11,7 @@ class MemoryHelper {
     return memory_get_usage();
   }
 
-  
+
   // Humanize memory representation
   public static function humanize( $bytes ) {
     if ( $bytes >= 1073741824e6 ) {
@@ -25,16 +25,16 @@ class MemoryHelper {
 
     } elseif ($bytes >= 1048576) {
       return number_format( $bytes / 1048576, 2 ) . ' MB';
-    
+
     } elseif ($bytes >= 1024) {
       return number_format( $bytes / 1024, 2 ) . ' KB';
-    
+
     } elseif ( $bytes > 1 ) {
       return $bytes . ' bytes';
-    
+
     } elseif ( $bytes == 1 ) {
       return $bytes . ' byte';
-    
+
     } else {
       return '0 bytes';
     }
@@ -57,7 +57,7 @@ class MemoryHelper {
         case 'B':
         case 'byte':
         case 'bytes':
-          return $matches[1] * 1; 
+          return $matches[1] * 1;
         break;
         case 'KB':
           return $matches[1] * 1024;

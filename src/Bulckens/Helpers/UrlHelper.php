@@ -25,8 +25,8 @@ class UrlHelper {
 
     return self::server( 'REQUEST_URI' ) == $path;
   }
-  
-  
+
+
   // Helper function for root path (bit trivial though...)
   public static function rootPath( $path = null ) {
     if ( is_null( $path ) )

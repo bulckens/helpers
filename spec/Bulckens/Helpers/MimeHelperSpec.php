@@ -7,7 +7,7 @@ use PhpSpec\ObjectBehavior;
 use Prophecy\Argument;
 
 class MimeHelperSpec extends ObjectBehavior {
-  
+
   // Get (static) method
   function it_returns_a_mime_type_for_an_extension() {
     $this::get( 'jpg' )->shouldBe( 'image/jpeg' );

@@ -7,7 +7,7 @@ use PhpSpec\ObjectBehavior;
 use Prophecy\Argument;
 
 class FileHelperSpec extends ObjectBehavior {
-  
+
   // Rsearch method
   function it_find_all_files_with_a_given_pattern_in_the_current_directory() {
     $rsearch = $this::rsearch( __DIR__, '/.*\.php$/' );

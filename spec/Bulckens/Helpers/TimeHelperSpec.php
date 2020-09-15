@@ -8,13 +8,13 @@ use PhpSpec\ObjectBehavior;
 use Prophecy\Argument;
 
 class TimeHelperSpec extends ObjectBehavior {
-  
+
   // Milliseconds method
   function it_returns_current_milliseconds() {
     $this::milliseconds()->shouldBeDouble();
   }
 
-  
+
   // Ms method
   function it_returns_current_milliseconds_as_alias() {
     $this::ms()->shouldBeDouble();
@@ -33,7 +33,7 @@ class TimeHelperSpec extends ObjectBehavior {
   function it_returns_a_stamp_with_the_current_date_to_microsecond_with_a_true_flag() {
     $this::stamp( true )->shouldMatch( '/^20[0-9]{18}$/' );
   }
-  
+
 
   // Sec method
   function it_parses_a_given_string_representation_to_time_in_milliseconds() {

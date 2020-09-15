@@ -97,7 +97,7 @@ class TimeHelper {
     $now = DateTime::createFromFormat( 'U.u', microtime( true ) );
     return $now->format( $format );
   }
-  
+
 }
 
 

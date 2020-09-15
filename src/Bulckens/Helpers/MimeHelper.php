@@ -15,11 +15,11 @@ class MimeHelper {
   , [ 'ext' => 'rtf', 'mime' => 'application/rtf' ]
   , [ 'ext' => 'tiff', 'mime' => 'image/tiff' ]
   , [ 'ext' => 'txt', 'mime' => 'text/plain' ]
-  , [ 'ext' => 'xml', 'mime' => 'application/xml' ] 
+  , [ 'ext' => 'xml', 'mime' => 'application/xml' ]
   , [ 'ext' => 'yaml', 'mime' => 'application/x-yaml' ]
   , [ 'ext' => 'yml', 'mime' => 'application/x-yaml' ]
   , [ 'ext' => 'zip', 'mime' => 'application/zip' ]
-  
+
 
     // secondary
   , [ 'ext' => '3dm', 'mime' => 'x-world/x-3dmf' ]
@@ -649,7 +649,7 @@ class MimeHelper {
   , [ 'ext' => 'xlw', 'mime' => 'application/x-excel' ]
   , [ 'ext' => 'xlw', 'mime' => 'application/x-msexcel' ]
   , [ 'ext' => 'xm', 'mime' => 'audio/xm' ]
-  , [ 'ext' => 'xml', 'mime' => 'application/xml' ] 
+  , [ 'ext' => 'xml', 'mime' => 'application/xml' ]
   , [ 'ext' => 'xml', 'mime' => 'text/xml' ]
   , [ 'ext' => 'xmz', 'mime' => 'xgl/movie' ]
   , [ 'ext' => 'xpix', 'mime' => 'application/x-vnd.ls-xpix' ]
@@ -680,7 +680,7 @@ class MimeHelper {
       if ( $ext == $pair['ext'] ) return $pair['mime'];
     }
   }
-  
+
 
   // Get mime type for given extension
   public static function ext( $mime ) {
@@ -712,7 +712,7 @@ class MimeHelper {
   public static function register( $ext, $mime ) {
     if ( $added = empty( self::get( $ext )))
       array_push( self::$map, [ 'ext' => $ext, 'mime' => $mime ]);
-    
+
     return $added;
   }
 
