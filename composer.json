@@ -2,7 +2,7 @@
     "name": "bulckens/helpers",
     "description": "A collection of core helpers useful for any PHP app",
     "type": "library",
-    "license": "Proprietary",
+    "license": "MIT",
     "authors": [
         {
             "name": "wout",
